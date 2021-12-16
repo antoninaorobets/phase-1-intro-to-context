@@ -45,9 +45,7 @@ function hoursWorkedOnDate(emploeeRecord, dateString) {
 }
 
 function wagesEarnedOnDate(emploeeRecord, dateString) {
-    const inObj = emploeeRecord.timeInEvents.find(element => element.date === dateString)
-    const outObj = emploeeRecord.timeOutEvents.find(element => element.date === dateString)
-    return (outObj.hour - inObj.hour) / 100 * emploeeRecord.payPerHour
+    return hoursWorkedOnDate(emploeeRecord, dateString) * emploeeRecord.payPerHour
 }
 
 function allWagesFor(emploeeRecord){
@@ -61,9 +59,8 @@ function allWagesFor(emploeeRecord){
 }
 
 function calculatePayroll(emploeeRecordArr){
-    let sum = 0
-    for (let i = 0; i < emploeeRecordArr.length; i++){
-      sum = sum + allWagesFor(emploeeRecordArr[i])
-    }
-    return sum 
+    return  emploeeRecordArr.reduce(function(sum, emploeeRecord){
+        console.log(sum, emploeeRecord ); 
+        return  sum + allWagesFor(emploeeRecord) 
+        },0)
   }
